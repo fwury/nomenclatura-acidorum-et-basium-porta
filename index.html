@@ -363,9 +363,9 @@
 			document.getElementById("input").value = "";
 			document.getElementById("input").focus();
 			Array.from(document.getElementsByClassName("periodic_table_element")).forEach(function(x) {
-				document.getElementById(`periodic_table_${x}`).style.backgroundColor = "transparent";
-				document.getElementById(`periodic_table_${x}`).style.color = "#ffffff";
-				document.getElementById(`periodic_table_${x}`).style.fontWeight = "400";
+				x.style.backgroundColor = "transparent";
+				x.style.color = "#ffffff";
+				x.style.fontWeight = "400";
 			});
 
 			var binary_acids = [
