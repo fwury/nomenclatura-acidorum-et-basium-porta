@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Nomenclatura Acidorum et Basium Porta</title>
+		<style>
+			@font-face {
+				font-family: 'Familjen Grotesk';
+				src: url('assets/familjen_grotesk.ttf') format('truetype');
+			}
+
+			@keyframes slide_fade {
+				0% { opacity: 0; transform: translate(-50%, -40%); }
+				100% { opacity: 1; transform: translate(-50%, -50%); }
+			}
+
+			@keyframes info {
+				0% { opacity: 0 }
+				20% { opacity: 1 }
+				80% { opacity: 1 }
+				100% { opacity: 0 }
+			}
+
+			@keyframes blink {
+				0% { opacity : 0 }
+				25% { opacity : 1 }
+				50% { opacity : 0 }
+				75% { opacity: 1 }
+				100% { opacity: 0 }
+			}
+			
+			html {
+				height: 100%;
+			}
+
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: 'Familjen Grotesk', sans-serif;
+				background: linear-gradient(#141e30, #243b55);
+				color: #ffffff;
+			}
+
+			#content {
+				position: absolute;
+				top: 30%;
+				left: 50%;
+				width: 400px;
+				padding: 40px;
+				transform: translate(-50%, -50%);
+				background: rgba(0,0,0,.5);
+				box-sizing: border-box;
+				box-shadow: 0 15px 25px rgba(0,0,0,.6);
+				border-radius: 10px;
+				animation: slide_fade 1s;
+			}
+
+			#content p {
+				margin: 0;
+			}
+
+			#content h2 {
+				margin: 0 0 30px;
+				padding: 0;
+				text-align: center;
+			}
+
+			#content .input-box {
+				position: relative;
+			}
+
+			#content .input-box input {
+				width: 100%;
+				padding: 10px 0;
+				font-size: 16px;
+				color: #ffffff;
+				margin-bottom: 30px;
+				border: none;
+				border-bottom: 1px solid #fff;
+				outline: none;
+				background: transparent;
+			}
+
+			#content .input-box label {
+				position: absolute;
+				top:0;
+				left: 0;
+				padding: 10px 0;
+				font-size: 16px;
+				pointer-events: none;
+				transition: .5s;
+			}
+
+			#content .input-box input:focus ~ label,
+			#content .input-box input:not(:placeholder-shown) ~ label {
+				top: -20px;
+				left: 0;
+				color: #03e9f4;
+				font-size: 12px;
+			}
+
+			#periodic_table table {
+				position: absolute;
+				left: 50%;
+				top: 75%;
+				transform: translate(-50%, -50%);
+				width: 800px;
+				height: 300px;
+				animation: slide_fade 1s;
+			}
+
+			#periodic_table td {
+				font-size: 12px;
+				color: #f4fbff;
+				border: 1px solid #f4fbff;
+				border-radius: 2px;
+				text-align: center;
+				transition: background-color 1s, color 1s, font-weight 1s;
+				line-height: 0.75;
+			}
+
+			#periodic_table td.hide {
+				background-color: transparent;
+				border: none;
+				text-align: right;
+			}
+
+			.element_name {
+				font-size: 8px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<h2 id="question"></h2>
+			<div class="input-box">
+				<input id="input" type="text" placeholder=" " autocomplete="off" />
+				<label>Answer</label>
+			</div>
+			<p>Enter a subscript by preceding it with an underscore (<b>_</b>). Enter a superscript by preceding it with an caret (<b>^</b>). Type <b>?</b> to reveal the answer.</p>
+			<br /><p><i>Don't forget the states!</i></p>
+		</div>
+
+		<div id="periodic_table">
+			<table>
+				<tr>
+					<td class="periodic_table_element" id="periodic_table_H"><sup>1</sup> H<br /><span class="element_name">Hydrogen</span></td>
+					<td class="hide" colspan="16"></td>
+					<td class="periodic_table_element" id="periodic_table_He"><sup>2</sup> He<br /><span class="element_name">Helium</span></td>
+				</tr>
+				<tr>
+					<td class="periodic_table_element" id="periodic_table_Li"><sup>3</sup> Li<br /><span class="element_name">Lithium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Be"><sup>4</sup> Be<br /><span class="element_name">Beryllium</span></td>
+					<td class="hide" colspan="10"></td>
+					<td class="periodic_table_element" id="periodic_table_B"><sup>5</sup> B<br /><span class="element_name">Boron</span></td>
+					<td class="periodic_table_element" id="periodic_table_C"><sup>6</sup> C<br /><span class="element_name">Carbon</span></td>
+					<td class="periodic_table_element" id="periodic_table_N"><sup>7</sup> N<br /><span class="element_name">Nitrogen</span></td>
+					<td class="periodic_table_element" id="periodic_table_O"><sup>8</sup> O<br /><span class="element_name">Oxygen</span></td>
+					<td class="periodic_table_element" id="periodic_table_F"><sup>9</sup> F<br /><span class="element_name">Fluorine</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ne"><sup>10</sup> Ne<br /><span class="element_name">Neon</span></td>
+				</tr>
+				<tr>
+					<td class="periodic_table_element" id="periodic_table_Na"><sup>11</sup> Na<br /><span class="element_name">Sodium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Mg"><sup>12</sup> Mg<br /><span class="element_name">Magnesium</span></td>
+					<td class="hide" colspan="10"></td>
+					<td class="periodic_table_element" id="periodic_table_Al"><sup>13</sup> Al<br /><span class="element_name">Aluminum</span></td>
+					<td class="periodic_table_element" id="periodic_table_Si"><sup>14</sup> Si<br /><span class="element_name">Silicon</span></td>
+					<td class="periodic_table_element" id="periodic_table_P"><sup>15</sup> P<br /><span class="element_name">Phosphorus</span></td>
+					<td class="periodic_table_element" id="periodic_table_S"><sup>16</sup> S<br /><span class="element_name">Sulfur</span></td>
+					<td class="periodic_table_element" id="periodic_table_Cl"><sup>17</sup> Cl<br /><span class="element_name">Chlorine</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ar"><sup>18</sup> Ar<br /><span class="element_name">Argon</span></td>
+				</tr>
+				<tr>
+					<td class="periodic_table_element" id="periodic_table_K"><sup>19</sup> K<br /><span class="element_name">Potassium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ca"><sup>20</sup> Ca<br /><span class="element_name">Calcium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Sc"><sup>21</sup> Sc<br /><span class="element_name">Scandium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ti"><sup>22</sup> Ti<br /><span class="element_name">Titanium</span></td>
+					<td class="periodic_table_element" id="periodic_table_V"><sup>23</sup> V<br /><span class="element_name">Vanadium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Cr"><sup>24</sup> Cr<br /><span class="element_name">Chromium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Mn"><sup>25</sup> Mn<br /><span class="element_name">Manganese</span></td>
+					<td class="periodic_table_element" id="periodic_table_Fe"><sup>26</sup> Fe<br /><span class="element_name">Iron</span></td>
+					<td class="periodic_table_element" id="periodic_table_Co"><sup>27</sup> Co<br /><span class="element_name">Cobalt</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ni"><sup>28</sup> Ni<br /><span class="element_name">Nickel</span></td>
+					<td class="periodic_table_element" id="periodic_table_Cu"><sup>29</sup> Cu<br /><span class="element_name">Copper</span></td>
+					<td class="periodic_table_element" id="periodic_table_Zn"><sup>30</sup> Zn<br /><span class="element_name">Zinc</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ga"><sup>31</sup> Ga<br /><span class="element_name">Gallium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ge"><sup>32</sup> Ge<br /><span class="element_name">Germanium</span></td>
+					<td class="periodic_table_element" id="periodic_table_As"><sup>33</sup> As<br /><span class="element_name">Arsenic</span></td>
+					<td class="periodic_table_element" id="periodic_table_Se"><sup>34</sup> Se<br /><span class="element_name">Selenium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Br"><sup>35</sup> Br<br /><span class="element_name">Bromine</span></td>
+					<td class="periodic_table_element" id="periodic_table_Kr"><sup>36</sup> Kr<br /><span class="element_name">Krypton</span></td>
+				</tr>
+				<tr>
+					<td class="periodic_table_element" id="periodic_table_Rb"><sup>37</sup> Rb<br /><span class="element_name">Rubidium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Sr"><sup>38</sup> Sr<br /><span class="element_name">Strontium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Y"><sup>39</sup> Y<br /><span class="element_name">Yttrium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Zr"><sup>40</sup> Zr<br /><span class="element_name">Zirconium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Nb"><sup>41</sup> Nb<br /><span class="element_name">Niobium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Mo"><sup>42</sup> Mo<br /><span class="element_name">Molybdenum</span></td>
+					<td class="periodic_table_element" id="periodic_table_Tc"><sup>43</sup> Tc<br /><span class="element_name">Technetium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ru"><sup>44</sup> Ru<br /><span class="element_name">Ruthenium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Rh"><sup>45</sup> Rh<br /><span class="element_name">Rhodium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Pd"><sup>46</sup> Pd<br /><span class="element_name">Palladium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ag"><sup>47</sup> Ag<br /><span class="element_name">Silver</span></td>
+					<td class="periodic_table_element" id="periodic_table_Cd"><sup>48</sup> Cd<br /><span class="element_name">Cadmium</span></td>
+					<td class="periodic_table_element" id="periodic_table_In"><sup>49</sup> In<br /><span class="element_name">Indium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Sn"><sup>50</sup> Sn<br /><span class="element_name">Tin</span></td>
+					<td class="periodic_table_element" id="periodic_table_Sb"><sup>51</sup> Sb<br /><span class="element_name">Antimony</span></td>
+					<td class="periodic_table_element" id="periodic_table_Te"><sup>52</sup> Te<br /><span class="element_name">Tellurium</span></td>
+					<td class="periodic_table_element" id="periodic_table_I"><sup>53</sup> I<br /><span class="element_name">Iodine</span></td>
+					<td class="periodic_table_element" id="periodic_table_Xe"><sup>54</sup> Xe<br /><span class="element_name">Xenon</span></td>
+				</tr>
+				<tr>
+					<td class="periodic_table_element" id="periodic_table_Cs"><sup>55</sup> Cs<br /><span class="element_name">Cesium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ba"><sup>56</sup> Ba<br /><span class="element_name">Barium</span></td>
+					<td class="periodic_table_element" id="periodic_table_La"><sup>57</sup> La*<br /><span class="element_name">Lanthanum</span></td>
+					<td class="periodic_table_element" id="periodic_table_Hf"><sup>72</sup> Hf<br /><span class="element_name">Hafnium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ta"><sup>73</sup> Ta<br /><span class="element_name">Tantalum</span></td>
+					<td class="periodic_table_element" id="periodic_table_W"><sup>74</sup> W<br /><span class="element_name">Tungsten</span></td>
+					<td class="periodic_table_element" id="periodic_table_Re"><sup>75</sup> Re<br /><span class="element_name">Rhenium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Os"><sup>76</sup> Os<br /><span class="element_name">Osmium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ir"><sup>77</sup> Ir<br /><span class="element_name">Iridium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Pt"><sup>78</sup> Pt<br /><span class="element_name">Platinum</span></td>
+					<td class="periodic_table_element" id="periodic_table_Au"><sup>79</sup> Au<br /><span class="element_name">Gold</span></td>
+					<td class="periodic_table_element" id="periodic_table_Hg"><sup>80</sup> Hg<br /><span class="element_name">Mercury</span></td>
+					<td class="periodic_table_element" id="periodic_table_Tl"><sup>81</sup> Tl<br /><span class="element_name">Thallium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Pb"><sup>82</sup> Pb<br /><span class="element_name">Lead</span></td>
+					<td class="periodic_table_element" id="periodic_table_Bi"><sup>83</sup> Bi<br /><span class="element_name">Bismuth</span></td>
+					<td class="periodic_table_element" id="periodic_table_Po"><sup>84</sup> Po<br /><span class="element_name">Polonium</span></td>
+					<td class="periodic_table_element" id="periodic_table_At"><sup>85</sup> At<br /><span class="element_name">Astatine</span></td>
+					<td class="periodic_table_element" id="periodic_table_Rn"><sup>86</sup> Rn<br /><span class="element_name">Radon</span></td>
+				</tr>
+				<tr>
+					<td class="periodic_table_element" id="periodic_table_Fr"><sup>87</sup> Fr<br /><span class="element_name">Francium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ra"><sup>88</sup> Ra<br /><span class="element_name">Radium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ac"><sup>89</sup> Ac**<br /><span class="element_name">Actinium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Rf"><sup>104</sup> Rf<br /><span class="element_name">Rutherfordium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Db"><sup>105</sup> Db<br /><span class="element_name">Dubium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Sg"><sup>106</sup> Sg<br /><span class="element_name">Seaborgium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Bh"><sup>107</sup> Bh<br /><span class="element_name">Bohrium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Hs"><sup>108</sup> Hs<br /><span class="element_name">Hassium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Mt"><sup>109</sup> Mt<br /><span class="element_name">Meitnerium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ds"><sup>110</sup> Ds<br /><span class="element_name">Darmstadtium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Rg"><sup>111</sup> Rg<br /><span class="element_name">Roentgenium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Cn"><sup>112</sup> Cn<br /><span class="element_name">Copernicium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Nh"><sup>113</sup> Nh<br /><span class="element_name">Nihonium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Fl"><sup>114</sup> Fl<br /><span class="element_name">Flerovium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Mc"><sup>115</sup> Mc<br /><span class="element_name">Moscovium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Lv"><sup>116</sup> Lv<br /><span class="element_name">Livermorium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ts"><sup>117</sup> Ts<br /><span class="element_name">Tennessine</span></td>
+					<td class="periodic_table_element" id="periodic_table_Og"><sup>118</sup> Og<br /><span class="element_name">Oganesson</span></td>
+				</tr>
+				<tr>
+					<td class="hide" colspan="16"></td>
+				</tr>
+				<tr>
+					<td class="hide" colspan="2"></td>
+					<td class="hide">*</td>
+					<td class="periodic_table_element" id="periodic_table_Ce"><sup>58</sup> Ce<br /><span class="element_name">Cerium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Pr"><sup>59</sup> Pr<br /><span class="element_name">Praseodymium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Nd"><sup>60</sup> Nd<br /><span class="element_name">Neodymium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Pm"><sup>61</sup> Pm<br /><span class="element_name">Promethium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Sm"><sup>62</sup> Sm<br /><span class="element_name">Samarium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Eu"><sup>63</sup> Eu<br /><span class="element_name">Europium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Gd"><sup>64</sup> Gd<br /><span class="element_name">Gadolinium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Tb"><sup>65</sup> Tb<br /><span class="element_name">Terbium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Dy"><sup>66</sup> Dy<br /><span class="element_name">Dysprosium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Ho"><sup>67</sup> Ho<br /><span class="element_name">Holmium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Er"><sup>68</sup> Er<br /><span class="element_name">Erbium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Tm"><sup>69</sup> Tm<br /><span class="element_name">Thulium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Yb"><sup>70</sup> Yb<br /><span class="element_name">Ytterbium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Lu"><sup>71</sup> Lu<br /><span class="element_name">Lutetium</span></td>
+				</tr>
+				<tr>
+					<td class="hide" colspan="2"></td>
+					<td class="hide">**</td>
+					<td class="periodic_table_element" id="periodic_table_Th"><sup>90</sup> Th<br /><span class="element_name">Thorium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Pa"><sup>91</sup> Pa<br /><span class="element_name">Protactinium</span></td>
+					<td class="periodic_table_element" id="periodic_table_U"><sup>92</sup> U<br /><span class="element_name">Uranium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Np"><sup>93</sup> Np<br /><span class="element_name">Neptunium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Pu"><sup>94</sup> Pu<br /><span class="element_name">Plutonium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Am"><sup>95</sup> Am<br /><span class="element_name">Americium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Cm"><sup>96</sup> Cm<br /><span class="element_name">Curium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Bk"><sup>97</sup> Bk<br /><span class="element_name">Berkelium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Cf"><sup>98</sup> Cf<br /><span class="element_name">Californium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Es"><sup>99</sup> Es<br /><span class="element_name">Einsteinium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Fm"><sup>100</sup> Fm<br /><span class="element_name">Fermium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Md"><sup>101</sup> Md<br /><span class="element_name">Mendelevium</span></td>
+					<td class="periodic_table_element" id="periodic_table_No"><sup>102</sup> No<br /><span class="element_name">Nobelium</span></td>
+					<td class="periodic_table_element" id="periodic_table_Lr"><sup>103</sup> Lr<br /><span class="element_name">Lawrencium</span></td>
+				</tr>
+			</table>
+		</div>
+	</body>
+	<script>
+		function parse(formula) {
+			let result = "";
+			let i = 0;
+			while (i < formula.length) {
+				if (formula[i] == "_") {
+					let j = i + 1;
+					while (j < formula.length && (/\d|\+|-/).test(formula[j])) {
+						j++;
+					}
+					result += `<sub>${formula.slice(i+1, j)}</sub>`;
+					i = j;
+				}
+				else if (formula[i] == "^") {
+					let j = i + 1;
+					while (j < formula.length && (/\d|\+|-/).test(formula[j])) {
+						j++;
+					}
+					result += `<sup>${formula.slice(i+1, j)}</sup>`;
+					i = j;
+				}
+				else {
+					result += formula[i];
+					i++;
+				}
+			}
+			return result;
+		}
+
+		function correct() {
+			let checkmark = document.createElement("img");
+			checkmark.src = "assets/checkmark.png";
+			checkmark.style.position = "fixed";
+			checkmark.style.top = "45vh";
+			checkmark.style.left = "47.5vw";
+			checkmark.style.width = "5vw";
+			checkmark.style.filter = "invert(100%)";
+			checkmark.style.animation = "blink 1s";
+			document.body.appendChild(checkmark);
+			setTimeout(function() {
+				checkmark.remove();
+			}, 1000);
+			
+			let audio = new Audio('assets/correct.mp3');
+			audio.play();
+
+			reset();
+		}
+
+
+		function incorrect() {
+			let x = document.createElement("img");
+			x.src = "assets/x.png";
+			x.style.position = "fixed";
+			x.style.top = "45vh";
+			x.style.left = "47.5vw";
+			x.style.width = "5vw";
+			x.style.filter = "invert(100%)";
+			x.style.animation = "blink 1s";
+			document.body.appendChild(x);
+			setTimeout(function() {
+				x.remove();
+			}, 1000);
+			
+			let audio = new Audio('assets/incorrect.mp3');
+			audio.play();
+		}
+
+		function reset() {
+			document.getElementById("input").value = "";
+			document.getElementById("input").focus();
+
+			var binary_acids = [
+				{
+					formula: "HF",
+					name: "hydrofluoric acid",
+					elements: ["F"]
+				},
+				{
+					formula: "HCl",
+					name: "hydrochloric acid",
+					elements: ["Cl"]
+				},
+				{
+					formula: "HBr",
+					name: "hydrobromic acid",
+					elements: ["Br"]
+				},
+				{
+					formula: "HI",
+					name: "hydroiodic acid",
+					elements: ["I"]
+				},
+				{
+					formula: "H_2Se",
+					name: "hydroselenic acid",
+					elements: ["Se"]
+				},
+				{
+					formula: "H_2Te",
+					name: "hydrotelluric acid",
+					elements: ["Te"]
+				},
+				{
+					formula: "H_2S",
+					name: "hydrosulfuric acid",
+					elements: ["S"]
+				},
+				{
+					formula: "HAt",
+					name: "hydroastatic acid",
+					elements: ["At"]
+				}
+			];
+
+			var oxoacids = [
+				{
+					formula: "H_2CO_3",
+					name: "carbonic acid",
+					elements: ["C"]
+				},
+				{
+					formula: "H_2CO_2",
+					name: "carbonous acid",
+					elements: ["C"]
+				},
+				{
+					formula: "HNO_3",
+					name: "nitric acid",
+					elements: ["N"]
+				},
+				{
+					formula: "HNO_2",
+					name: "nitrous acid",
+					elements: ["N"]
+				},
+				{
+					formula: "H_3PO_4",
+					name: "phosphoric acid",
+					elements: ["P"]
+				},
+				{
+					formula: "H_3PO_3",
+					name: "phosphorous acid",
+					elements: ["P"]
+				},
+				{
+					formula: "H_3SO_4",
+					name: "sulfuric acid",
+					elements: ["S"] 
+				},
+				{
+					formula: "H_3SO_3",
+					name: "sulfurous acid",
+					elements: ["S"] 
+				},
+				{
+					formula: "HClO_3",
+					name: "chloric acid",
+					elements: ["Cl"]
+				},
+				{
+					formula: "HClO_2",
+					name: "chlorous acid",
+					elements: ["Cl"]
+				}
+			];
+			
+			var bases = [
+				{
+					formula: "LiOH",
+					name: "lithium hydroxide",
+					elements: ["Li"]
+				},
+				{
+					formula: "NaOH",
+					name: "sodium hydroxide",
+					elements: ["Na"]
+				},
+				{
+					formula: "KOH",
+					name: "potassium hydroxide",
+					elements: ["K"]
+				},
+				{
+					formula: "RbOH",
+					name: "rubidium hydroxide",
+					elements: ["Rb"]
+				},
+				{
+					formula: "CsOH",
+					name: "cesium hydroxide",
+					elements: ["Cs"]
+				},
+				{
+					formula: "Be(OH)_2",
+					name: "beryllium hydroxide",
+					elements: ["Be"]
+				},
+				{
+					formula: "Mg(OH)_2",
+					name: "magnesium hydroxide",
+					elements: ["Mg"]
+				},
+				{
+					formula: "Ca(OH)_2",
+					name: "calcium hydroxide",
+					elements: ["Ca"]
+				},
+				{
+					formula: "Sr(OH)_2",
+					name: "strontium hydroxide",
+					elements: ["Sr"]
+				},
+				{
+					formula: "Ba(OH)_2",
+					name: "barium hydroxide",
+					elements: ["Ba"]
+				},
+				{
+					formula: "NH4OH",
+					name: "ammonium hydroxide",
+					elements: []
+				}
+			]
+
+			var substance;
+
+			switch (Math.floor(Math.random() * 3)) {
+				case 0:
+					substance = binary_acids[Math.floor(Math.random() * binary_acids.length)];
+					break;
+				case 1:
+					substance = oxoacids[Math.floor(Math.random() * oxoacids.length)];
+					break;
+				default:
+					substance = bases[Math.floor(Math.random() * bases.length)];
+			}
+
+			substance.elements.forEach(function(x) {
+				document.getElementById(`periodic_table_${x}`).style.backgroundColor = "#ffffff";
+				document.getElementById(`periodic_table_${x}`).style.color = "#141e30";
+				document.getElementById(`periodic_table_${x}`).style.fontWeight = "700";
+			});
+
+			if (Math.random() < 0.5) {
+				document.getElementById("question").innerHTML = parse(`${substance.formula}<sub>(aq)</sub>`);
+				sessionStorage.answer = substance.name;
+			}
+
+			else {
+				document.getElementById("question").innerHTML = substance.name;
+				sessionStorage.answer = `${substance.formula}_(aq)`;
+			}
+		}
+
+		document.onkeydown = function(event) {
+			if (event.key == "Enter") {
+				let answer = document.getElementById("input").value;
+				if (sessionStorage.answer == answer) {
+					correct();
+				}
+				else {
+					incorrect();
+				}
+			}
+
+			else if (event.key == "?") {
+				event.preventDefault();
+				document.getElementById("input").value = sessionStorage.answer;
+			}
+		}
+
+		document.body.onload = function() {
+			reset();
+		}
+	</script>
+</html>
